@@ -1,5 +1,6 @@
 module Infosimples
   module Data
-    VERSION = "0.1.0"
+    VERSION = "1.9.3" # https://data.infosimples.com/docs/changelog
+    USER_AGENT = "Infosimples::Data/Ruby v#{VERSION}"
   end
 end

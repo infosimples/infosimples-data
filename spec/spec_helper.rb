@@ -12,3 +12,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+require 'yaml'
+SECRETS = YAML.load_file('spec/secrets.yml')

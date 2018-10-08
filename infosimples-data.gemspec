@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Infosimples"]
   spec.email         = ["team@infosimples.com.br"]
 
-  spec.summary       = %q{Ruby API for InfosimplesData (https://infosimples.com/)}
-  spec.description   = %q{InfosimplesData allows you to automate web site navigation.}
+  spec.summary       = %q{Ruby API for Infosimples::Data (https://infosimples.com/)}
+  spec.description   = %q{Infosimples::Data allows you to automate web site navigation.}
   spec.homepage      = "https://github.com/infosimples/infosimples-data"
   spec.license       = "MIT"
 
