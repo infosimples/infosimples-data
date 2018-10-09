@@ -10,7 +10,7 @@ module Infosimples::Data
 
     # Create a Infosimples::Data API client.
     #
-    # @param [String] Your access token.
+    # @param [String] token    Your access token.
     # @param [Hash]   options  Options hash.
     # @option options [Integer] :timeout (120)   Seconds before giving up of an
     #                                            automation being completed.
@@ -25,6 +25,12 @@ module Infosimples::Data
       self.max_age  = options[:max_age] || 86400 # 24 hours in seconds
     end
 
+    # Automate a service.
+    #
+    # @param [String] service   Service you want to automate.
+    # @param [Hash]   args      Arguments to be used in the service automation.
+    #
+    # @return [Hash] Response according to https://data.infosimples.com/docs.
     def automate(service, args = {})
       args.keys.each do |key|
         if ENCRYPTABLE_ARGS[key.to_s]
@@ -48,8 +54,26 @@ module Infosimples::Data
       request('pricing', :get)
     end
 
+    # Download sites_urls from response.
+    #
+    # @param [Hash] response  Response returned by #automate.
+    #
+    # @return [Array] HTML bodies from sites_urls.
+    def download_sites_urls(response)
+      return [] if !response.is_a?(Hash) ||
+                   (sites_urls = response.dig('receipt', 'sites_urls')).nil?
+      sites_urls.map do |url|
+        Infosimples::Data::HTTP.request(url: url, http_timeout: 30)
+      end
+    end
+
     private
 
+    # Apply symmetric encryption to data.
+    #
+    # @param [String] data The original data that will be encrypted.
+    #
+    # @return [String] encrypted data.
     def encrypt(data)
       @crypt ||= Infosimples::Data::SymmetricEncryption.new(token)
       @crypt.encrypt(data)
@@ -58,8 +82,8 @@ module Infosimples::Data
     # Perform an HTTP request to the Infosimples Data API.
     #
     # @param [String] service  API method name.
-    # @param [Symbol] method  HTTP method (:get, :post, :multipart).
-    # @param [Hash]   payload Data to be sent through the HTTP request.
+    # @param [Symbol] method   HTTP method (:get, :post, :multipart).
+    # @param [Hash]   payload  Data to be sent through the HTTP request.
     #
     # @return [Hash] Parsed JSON from the API response.
     #

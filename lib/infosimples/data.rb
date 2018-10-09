@@ -6,8 +6,8 @@ require 'json'
 
 module Infosimples
   module Data
-    def self.new(token)
-      Infosimples::Data::Client.new(token)
+    def self.new(token, args = {})
+      Infosimples::Data::Client.new(token, args)
     end
   end
 end
