@@ -31,13 +31,31 @@ Or install it yourself as:
 
   ```ruby
   response = client.automate('correios/cep', cep: '01311915')
-  response['code'] # 200
-  response['code_message'] # A consulta foi realizada com sucesso e retornou um resultado.
-  response['data'] # Information about the postal code
+  response['code']                  # 200
+  response['code_message']          # "A consulta foi realizada com sucesso e retornou um resultado."
+  response['data']                  # Information about the postal code
   response['receipt']['sites_urls'] # Links for the original HTMLs.
   ```
 
-  > Check the full documentation of the response at https://data.infosimples.com/docs
+  > Check the full response in our documentation:
+  > https://data.infosimples.com/docs
+
+3. **Billing**
+
+  ```ruby
+  billing = client.billing          # Array of Hashes with:
+  billing.first['name']             # - Name of the Token
+  billing.first['quantity']         # - Number of automation requests the token has made
+  billing.first['credits']          # - How many credits the token has used
+  ```
+
+4. **Pricing**
+
+  ```ruby
+  pricing = client.pricing          # Array of Hashes with:
+  pricing.first['service']          # - Name of the service that can be automated
+  pricing.first['credits']          # - How many credits this service uses
+  ```
 
 ## Development
 
