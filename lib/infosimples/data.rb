@@ -1,4 +1,5 @@
 require 'net/http'
+require 'openssl'
 require 'openssl/cipher'
 require 'digest/sha2'
 require 'base64'

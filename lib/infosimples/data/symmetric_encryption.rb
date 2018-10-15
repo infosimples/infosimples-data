@@ -3,7 +3,7 @@ module Infosimples::Data
     attr_accessor :key
     def initialize(key)
       fail("INVALID KEY SIZE: #{key}") if key.size < 32
-      self.key = key[0,32]
+      self.key = key[0, 32]
     end
 
     def encrypt(data, to_base64=true)
