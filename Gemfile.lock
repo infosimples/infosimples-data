@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    infosimples-data (1.9.6)
+    infosimples-data (1.9.9)
 
 GEM
   remote: https://rubygems.org/
