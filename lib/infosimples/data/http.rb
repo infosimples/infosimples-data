@@ -43,7 +43,7 @@ module Infosimples::Data
       http.use_ssl = true if (uri.scheme == 'https')
       http.open_timeout = timeout
       http.read_timeout = timeout + 10
-      http.max_retries = 0 # default is max_retries = 1
+      http.max_retries = 0 if http.respond_to?(:max_retries) # fix max_retries
       res = http.request(req)
       res.body
 
