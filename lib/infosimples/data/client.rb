@@ -2,9 +2,6 @@ module Infosimples::Data
   # Infosimples::Data::Client is a client for the Infosimples Data API.
   class Client
     BASE_URL = 'https://data.infosimples.com/api/v1/:service.json'
-    ENCRYPTABLE_ARGS = ['pkcs12_cert', 'pkcs12_pass', 'pass'].map {
-      |arg| [arg, true]
-    }.to_h
 
     attr_accessor :token, :timeout, :max_age
 
@@ -32,11 +29,6 @@ module Infosimples::Data
     #
     # @return [Hash] Response according to https://data.infosimples.com/docs.
     def automate(service, args = {})
-      args.keys.each do |key|
-        if ENCRYPTABLE_ARGS[key.to_s]
-          args[key] = encrypt(args[key])
-        end
-      end
       request(service, :multipart, args)
     end
 
@@ -68,16 +60,6 @@ module Infosimples::Data
     end
 
     private
-
-    # Apply symmetric encryption to data.
-    #
-    # @param [String] data The original data that will be encrypted.
-    #
-    # @return [String] encrypted data.
-    def encrypt(data)
-      @crypt ||= Infosimples::Data::SymmetricEncryption.new(token)
-      @crypt.encrypt(data)
-    end
 
     # Perform an HTTP request to the Infosimples Data API.
     #
